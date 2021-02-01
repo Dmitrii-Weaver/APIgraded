@@ -1,12 +1,16 @@
 //setting up the API
 const express = require('express')
 const bodyParser = require('body-parser')
-const Ajv = require('ajv').default
 const bcrypt = require('bcrypt')
 const users = require('./users');
 const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
 const app = express()
+
+//importing stuff
+
+const itemsComponent = require('./components/items')
+
 
 const port = 3000
 app.use(bodyParser.json());
@@ -107,8 +111,10 @@ app.get('/loginForJWT',passport.authenticate('basic', { session: false }),(req, 
     }
 
     const token = jwt.sign(payload, jwtSecretKey.secret, options);
+    res.status(200)
 
     return res.json({ token });
+    
 })
 
 /* 
@@ -117,6 +123,7 @@ MAIN BLOCK
 
 */
 
+app.use('/items', itemsComponent);
 
 app.get('/', (req,res) =>{
     res.send('OAOA MMM)')
