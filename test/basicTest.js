@@ -16,7 +16,6 @@ describe('test#1 : create user, login and basic functions',  function(){
         server.stop()
     })
 
-    let KEY 
     describe('test route /', function(){
         it("should return an ok code", async function(){
             await chai.request('http://localhost:3000').get('/')
@@ -76,9 +75,6 @@ describe('test#1 : create user, login and basic functions',  function(){
         })
 
         */
-    
-    
- 
-
 
 })
+
