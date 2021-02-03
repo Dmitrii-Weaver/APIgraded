@@ -98,6 +98,7 @@ describe('test#1 : create user, login and basic functions',  function(){
         it("should create an item", async function(){
             await chai.request('http://localhost:3000')
             .post('/items/createItem')
+            .set({ "Authorization": `Bearer ${token}` })
             .send({
                 "item_id": 3,
                 "item_info": {
@@ -170,9 +171,10 @@ describe('test#1 : create user, login and basic functions',  function(){
                 throw error
             })
         })
-        it("deletes an item with id '1'  ", async function(){
+        it("deletes an item with id '3'  ", async function(){
             await chai.request('http://localhost:3000')
-            .delete('/items/1')   
+            .delete('/items/3')   
+            .set({ "Authorization": `Bearer ${token}` })
             .then(res =>{
                 expect(res.status).to.equal(200)
             })
