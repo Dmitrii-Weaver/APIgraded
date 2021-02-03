@@ -6,6 +6,8 @@ chai.use(require('chai-http'))
 const server = require ("../server")
 
 
+let token
+
 describe('test#1 : create user, login and basic functions',  function(){
 
     before(function(){
@@ -20,11 +22,11 @@ describe('test#1 : create user, login and basic functions',  function(){
     describe('test route /', function(){
         it("should return an ok code", async function(){
             await chai.request('http://localhost:3000').get('/')
-            .then(response =>{
-                expect(statusCode).to.equal(200)
+            .then(res =>{
+                expect(res.status).to.equal(200)
             })
             .catch(error =>{
-
+                throw error
             })
         })
     })
@@ -42,42 +44,55 @@ describe('test#1 : create user, login and basic functions',  function(){
                     "password":"b"
                 
             })
-            .then(response =>{
-                expect(statusCode).to.equal(201)
+            .then(res =>{
+                expect(res.status).to.equal(201)
             })
             .catch(error =>{
-
+                throw error
             })
         })
     
     
     })
 
-    /*
+    
     describe('test route  /loginForJWT', function(){
-        it("should log in to the system", async function(){
+        it("should log in to the system and return a token", async function(){
             await chai.request('http://localhost:3000')
-            .post('/loginForJWT')
-            .send({
-                
-                    "username":"b",
-                    "password":"b"
-                
-            })
-            .then(response =>{
-                
-                console.log(response.body.token)
-                expect(statusCode).to.equal(200)
+            .get('/loginForJWT')
+            .auth('b', 'b')
+            .then(res =>{
+                token = res.body.token
+                console.log(token)
+                expect(res.status).to.equal(200)
                 
             })
             .catch(error =>{
-
+                throw error
             })
 
                })
         })
 
-        */
+        describe('test route  /testProtected', function(){
+            it("should use the token to access the route", async function(){
+                await chai.request('http://localhost:3000')
+                .get('/testProtected')
+                .set({ "Authorization": `Bearer ${token}` })
+                .then(res =>{
+                    
+                    console.log(res.body)
+                    expect(res.status).to.equal(200)
+                    
+                })
+                .catch(error =>{
+                    throw error
+                })
+    
+                   })
+            })
+
+        
 
        describe('test route  /items', function(){
         it("should create an item", async function(){
@@ -101,10 +116,11 @@ describe('test#1 : create user, login and basic functions',  function(){
                     "id": "1"
                 }
             })
-            .then(response =>{
-                expect(statusCode).to.equal(200)
+            .then(res =>{
+                expect(res.status).to.equal(200)
             })
             .catch(error =>{
+                throw error
 
             })
         })
@@ -115,9 +131,10 @@ describe('test#1 : create user, login and basic functions',  function(){
             .get('/items')
             .then(res =>{
                 console.log(res.body)
-                expect(statusCode).to.equal(200)
+                expect(res.status).to.equal(200)
             })
             .catch(error =>{
+                throw error
             })
         }) 
         it("shows items with an id '1' ", async function(){
@@ -125,9 +142,10 @@ describe('test#1 : create user, login and basic functions',  function(){
             .get('/items/1')   
             .then(res =>{
                 console.log(res.body)
-                expect(statusCode).to.equal(200)
+                expect(res.status).to.equal(200)
             })
             .catch(error =>{
+                throw error
             })
         })
         it("shows items in category 'art' ", async function(){
@@ -135,9 +153,10 @@ describe('test#1 : create user, login and basic functions',  function(){
             .get('/items/category/art')   
             .then(res =>{
                 console.log(res.body)
-                expect(statusCode).to.equal(200)
+                expect(res.status).to.equal(200)
             })
             .catch(error =>{
+                throw error
             })
         })
         it("shows items in location 'Oulu' ", async function(){
@@ -145,18 +164,20 @@ describe('test#1 : create user, login and basic functions',  function(){
             .get('/items/location/oulu')   
             .then(res =>{
                 console.log(res.body)
-                expect(statusCode).to.equal(200)
+                expect(res.status).to.equal(200)
             })
             .catch(error =>{
+                throw error
             })
         })
         it("deletes an item with id '1'  ", async function(){
             await chai.request('http://localhost:3000')
             .delete('/items/1')   
             .then(res =>{
-                expect(statusCode).to.equal(200)
+                expect(res.status).to.equal(200)
             })
             .catch(error =>{
+                throw error
             })
         })
         it("shows all items, now without the deleted item", async function(){
@@ -164,9 +185,10 @@ describe('test#1 : create user, login and basic functions',  function(){
             .get('/items')
             .then(res =>{
                 console.log(res.body)
-                expect(statusCode).to.equal(200)
+                expect(res.status).to.equal(200)
             })
             .catch(error =>{
+                throw error
             })
         }) 
 

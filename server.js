@@ -83,7 +83,7 @@ passport.use(new JwtStrategy(options, function(jwt_payload, done) {
 }));
 
 
-app.get('/testProtected',passport.authenticate('jwt', { session: false }),(req, res) => {
+app.get('/testProtected', passport.authenticate('jwt', { session: false }),(req, res) => {
     console.log("jwt");
     res.json(
       {
