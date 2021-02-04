@@ -1,9 +1,10 @@
 const express = require('express')
-
+const fs = require('fs');
+const multer = require('multer')
 const bodyParser = require('body-parser')
 const app = express()
 const Ajv = require('ajv').default
-
+const multerUpload = multer({dest: '../images'})
 const itemSchema = require("../schemas/items_schema.json")
 
 const router = express.Router();
@@ -19,7 +20,7 @@ let items_data = {
                 description: "This piece of art is priceless. Not for sale, just showing off.",
                 category: "art",
                 location: "oulu",
-                images: {},
+                images: [],
                 price: "priceless",
                 date_of_posting: "tomorrow",
                 delivery: "pick up"
@@ -104,36 +105,41 @@ router.delete('/:id', passportInstance.authenticate('jwt', { session: false }), 
         items_data.items = items_data.items.filter(item => item.item_id != req.params.id)
         res.sendStatus(200)
     }
-    else if (neededItem == undefined){
+    else if (neededItem == undefined) {
         res.sendStatus(404)
     }
-    else if (neededItem.item_seller.id != req.user.id){
+    else if (neededItem.item_seller.id != req.user.id) {
         res.sendStatus(401)
     }
-    
+
 })
 
 router.put('/:id', passportInstance.authenticate('jwt', { session: false }), (req, res) => {
-    const result = items_data.items.find(i => {
-        if (i.item_id == req.params.id) {
-            return true
+    const ajv = new Ajv()
+    const validate = ajv.compile(itemSchema)
+    const valid = validate(req.body)
+    if (valid == true) {
+        let neededItem = items_data.items.find(i => i.item_id == req.params.id)
+        if (neededItem.item_seller.id == req.user.id) {
+            let index = items_data.items.indexOf(neededItem)
+            items_data.items[index] = req.body
+            res.sendStatus(200)
         }
-        else {
-            return false
+        else if (neededItem == undefined) {
+            res.sendStatus(404)
         }
-    })
-    if (result === undefined) {
-        res.sendStatus(404)
+        else if (neededItem.item_seller.id != req.user.id) {
+            res.sendStatus(401)
+        }
     }
     else {
-
-        res.json(result);
+        res.sendStatus(400)
     }
 })
 
 
 
-router.post("/createItem", passportInstance.authenticate('jwt', { session: false }), (req, res) => {
+router.post("/", passportInstance.authenticate('jwt', { session: false }), (req, res) => {
     const ajv = new Ajv()
     const validate = ajv.compile(itemSchema)
     const valid = validate(req.body)
@@ -146,7 +152,46 @@ router.post("/createItem", passportInstance.authenticate('jwt', { session: false
     }
 })
 
+router.post('/:id/uploadImage', multerUpload.array('testFiles', 4), (req, res) => {
 
+    const ajv = new Ajv()
+    const validate = ajv.compile(itemSchema)
+    const valid = validate(req.body)
+    if (valid == true) {
+        let neededItem = items_data.items.find(i => i.item_id == req.params.id)
+        if (neededItem.item_seller.id == req.user.id) {
+            let index = items_data.items.indexOf(neededItem)
+           
+
+            req.files.forEach(f => {
+                fs.renameSync(f.path, './uploads/' + f.originalname)
+                items_data.items[index].images.push(f.originalname)
+              })
+            res.sendStatus(200)
+        }
+        else if (neededItem == undefined) {
+            res.sendStatus(404)
+        }
+        else if (neededItem.item_seller.id != req.user.id) {
+            res.sendStatus(401)
+        }
+    }
+    else {
+        res.sendStatus(400)
+    }
+
+    
+    console.log(req.files);
+    
+    res.send("Completed");
+    /*
+    fs.rename(req.file.path, './uploads/' + req.file.originalname, function (err) {
+        if (err) throw err;
+        console.log('renamed complete');
+        res.send("Test");
+      });    */
+  
+  });
 
 
 

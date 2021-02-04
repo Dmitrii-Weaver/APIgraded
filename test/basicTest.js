@@ -97,7 +97,7 @@ describe('test#1 : create user, login and basic functions',  function(){
        describe('test route  /items', function(){
         it("should create an item", async function(){
             await chai.request('http://localhost:3000')
-            .post('/items/createItem')
+            .post('/items/')
             .set({ "Authorization": `Bearer ${token}` })
             .send({
                 "item_id": 3,
@@ -106,7 +106,7 @@ describe('test#1 : create user, login and basic functions',  function(){
                     "description": "an alright, not stolen AK-74M",
                     "category": "tools",
                     "location": "Oulu",
-                    "images": {},
+                    "images": [],
                     "price": "100e",
                     "date_of_posting": "today",
                     "delivery": "pick up "

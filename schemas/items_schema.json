@@ -13,7 +13,7 @@
                 "description": "an alright, not stolen AK-74M",
                 "category": "tools",
                 "location": "Oulu",
-                "images": {},
+                "images": [],
                 "price": "100e",
                 "date_of_posting": "today",
                 "delivery": "pick up "
@@ -112,12 +112,12 @@
                 },
                 "images": {
                     "$id": "#/properties/item_info/properties/images",
-                    "type": "object",
+                    "type": "array",
                     "title": "The images schema",
                     "description": "An explanation about the purpose of this instance.",
-                    "default": {},
+                    "default": [],
                     "examples": [
-                        {}
+                        []
                     ],
                     "required": [],
                     "additionalProperties": true
