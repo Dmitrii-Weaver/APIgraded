@@ -38,7 +38,7 @@ let items_data = {
                 description: "This piece of art is worthless. Just take it.",
                 category: "art",
                 location: "oulu",
-                images: {},
+                images: [],
                 price: "0e",
                 date_of_posting: "yesterday",
                 delivery: "pick up"
@@ -152,22 +152,20 @@ router.post("/", passportInstance.authenticate('jwt', { session: false }), (req,
     }
 })
 
-router.post('/:id/uploadImage', multerUpload.array('testFiles', 4), (req, res) => {
+router.post('/uploadImage/:id', multerUpload.single('testFile'), passportInstance.authenticate('jwt', { session: false }), (req, res) => {
 
-    const ajv = new Ajv()
-    const validate = ajv.compile(itemSchema)
-    const valid = validate(req.body)
-    if (valid == true) {
         let neededItem = items_data.items.find(i => i.item_id == req.params.id)
         if (neededItem.item_seller.id == req.user.id) {
             let index = items_data.items.indexOf(neededItem)
-           
+        
+            fs.rename(req.file.path, '../images/' + req.file.originalname, function (err) {
+                if (err) throw err;
+                items_data.items[index].item_info.images.push(req.file.originalname)
+                console.log('renamed complete');
+                res.sendStatus(200)
+              });
 
-            req.files.forEach(f => {
-                fs.renameSync(f.path, './uploads/' + f.originalname)
-                items_data.items[index].images.push(f.originalname)
-              })
-            res.sendStatus(200)
+            
         }
         else if (neededItem == undefined) {
             res.sendStatus(404)
@@ -175,15 +173,10 @@ router.post('/:id/uploadImage', multerUpload.array('testFiles', 4), (req, res) =
         else if (neededItem.item_seller.id != req.user.id) {
             res.sendStatus(401)
         }
-    }
-    else {
-        res.sendStatus(400)
-    }
 
     
-    console.log(req.files);
+    console.log(req.file);
     
-    res.send("Completed");
     /*
     fs.rename(req.file.path, './uploads/' + req.file.originalname, function (err) {
         if (err) throw err;
