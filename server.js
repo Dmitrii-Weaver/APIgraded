@@ -10,7 +10,6 @@ const passportInstance = require('./components/passport')
 const itemsComponent = require('./components/items')
 
 
-
 app.use(bodyParser.json());
 app.set('port', (process.env.PORT || 80))
 
@@ -111,8 +110,8 @@ SERVER EXPORT
 */
 module.exports = {
     start: function(){
-        serverInstance = app.listen(port, () => {
-            console.log(`API is running on port ${port}`)
+        serverInstance = app.listen(app.get('port'), () => {
+            console.log(`API is running on port ${app.get('port')}`)
         })
     },
     stop: function(){
