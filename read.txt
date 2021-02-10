@@ -1,0 +1,130 @@
+# DOCUMENTATION
+
+## Contains the description of the API in both UwU and English.
+
+<br><br>
+
+## UwU version :
+
+**HEWWO!!! =UwU= Dis is a vewy showt descwiption of uwu dis supew dupew mega coow uwu  ✧･ﾟ: *✧ api ✧･ﾟ: *✧ uwu and awso its paths and stwuctuwe  =^w^= **
+
+## Requests:
+
+** GET / ** - Dis is a simpwe one i made vewy fiwst owo! chu just send it and it wesponds some wettews =*w*= . 
+
+
+** POST /register ** - Dis one wegistews a nyew usew  ｡･:*:･ﾟ★  It wequiwes a usewnyame~ a passwowd and an emaiw~ easy owo!!! =uwu=
+
+** GET /loginForJWT ** - Dis one chu use when chu want uwu to wog owo in owo!. When chu fiww evewything it says~ chu wiww get a supew secwet token /(=owo=)\ uwu chu use it fur supew sewious stuff that nyeed wogin wike make an item ow dewete an item ~(uwu)
+
+** GET /testProtected ** - Dis one is nyot vewy usefuw. Chu can caw it when chu want uwu to make suwe chu is wogged owo in good and veww owo! it nyeeds a supew secwet t o k e n chu got eawwiew uwu to wowk =.w.=
+
+<br>
+
+#### Nyow we wiww tawk about teh "item" thingies ~~(0w0=)
+
+
+** GET /items ** - Gives chu a cute kawaii awway of uwu aww teh items!! 
+
+** POST /items ** -▼ Hewe chu cweate a bwand nyew ★item★ owo! owo! owo! chu wiww nyeed uwu to be authowised fur that. Awso chu wiww nyeed uwu to wite a wot =TwT= ▼
+ 
+** GET /items/:id ** - ✧*:･ﾟ Wif dis wequest chu onwy get one item instead of  wots and wots of dem! nyo nyeed  to wead dem aww ! Yayy!! ✧*:･
+
+** DELETE /items/:id ** - !!!dewetes!!! an item (=~w~=) that has teh same id~ but onwy if chu is teh one cweated it! ♬♬♬
+
+** PUT /items/:id ** - Awwows chu uwu to change infowmation (what a hawd wowd =>w<=) about an item chu want uwu but awso if chu is teh one cweated it ～●～●～●～
+
+** GET /items/category/:category ** - Use dis one if chu onwy want uwu to get items fwom dis categowy (✿◠‿◠)
+
+** GET /items/location/:location ** - Dis one gives chu aww items owo in any wocation chu want!!!!  \(=@w@=)/
+
+** POST /items/uploadImage/:id ** - With dis chu can give chuw item a pictuwe! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ 
+
+
+# And thowse awe my supew coow  files!!!!! \\(OwO)
+
+## index.js ♡
+
+Dis one is impawtant! It impawts server.js and waunches it! (=ДwД=)
+
+## server.js ❀
+
+Hewe I waunch the API and awso keep my log in and wegistew thingies!! ･:*:･ﾟ☆
+
+## components/items.js  ꕥ
+
+Hewe I keep my cowmands to opewate the items! Awso vewy coow and vewy impawtant! (=ПwП=)
+
+## components/passport.js  ˁᱸᲲᱸˀ
+
+In hewe I stowed my passpawt fow log in system! ♩●♪
+
+
+## images  ▼
+
+A fowdew fow images. Booooowing (=^w^)
+
+## schemas ✤
+
+Howds a schema fow items! 【☆】★
+
+**This is a short description of this API, its paths and structure.**
+
+## Requests:
+
+** GET / ** - a test request, responds gibberish. 
+
+
+** POST /register ** - registers a new user, requires a username, a password and an email. If something is missing sends code 400, if not - 201
+
+** GET /loginForJWT ** - log in to the system. If log in is succesful sends back a token needed for authorized-only operations.
+
+** GET /testProtected ** - test log in route, requires the token given after logging in, sends back users data.
+
+<br>
+
+##### The following commands are related to items.js component.
+
+** GET /items ** - sends an array of all items in JSON.
+
+** POST /items ** - Is used to send a bunch of data and create a new item. Requires authorization.
+
+** GET /items/:id ** - sends data about a specific item.
+
+** DELETE /items/:id ** - deletes an item by the specified ID if the sender of the request is logged in as the user, who's created an item.
+
+** PUT /items/:id ** - replaces information about an item by the specified ID if the sender of the request is logged in as the user, who's created an item.
+
+** GET /items/category/:category ** - sends an array of items in the that are in the same category as stated.
+
+** GET /items/location/:location ** - sends an array of items in the that are in the same location as stated.
+
+** POST /items/uploadImage/:id ** - attaches a picture to the item if you are logged in as its poster.
+
+
+# Files
+
+## index.js
+
+Main file, imports Server.js, nothing else to say.
+
+## server.js
+
+Is the file that launches the api. Also holds the logging in commands.
+
+## components/items.js
+
+Holds all the commands related to operating with items.
+
+## components/passport.js
+
+passport instance that is separated from the rest of log in system
+
+
+## images 
+
+a folder for images
+
+## schemas
+
+holds a single schema for items

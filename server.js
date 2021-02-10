@@ -10,9 +10,9 @@ const passportInstance = require('./components/passport')
 const itemsComponent = require('./components/items')
 
 
-const port = 3000
-app.use(bodyParser.json());
 
+app.use(bodyParser.json());
+app.set('port', (process.env.PORT || 80))
 
 
 /*
