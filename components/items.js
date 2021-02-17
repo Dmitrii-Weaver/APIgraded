@@ -19,7 +19,7 @@ const passportInstance = require('./passport')
 
 var storage = cloudinaryStorage({
     cloudinary: cloudinary,
-    folder = '',
+    folder = 'images',
     allowedFormats: ['jpg', 'png'],
 })
 
