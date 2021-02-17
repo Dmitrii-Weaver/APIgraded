@@ -1,3 +1,4 @@
 node_modules
 jwt-key.json
 key.env
+Env.js
