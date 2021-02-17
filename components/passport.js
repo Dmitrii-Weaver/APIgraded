@@ -5,7 +5,7 @@ const JwtStrategy = require('passport-jwt').Strategy,
       ExtractJwt = require('passport-jwt').ExtractJwt;
 const bcrypt = require('bcrypt');
 const users = require('../users');
-const jwtSecretKey = require('../jwt-key.json');
+const jwtSecretKey = process.env.SECRET;
 
 
 passport.use(new BasicStrategy(
@@ -26,7 +26,7 @@ passport.use(new BasicStrategy(
 
 let options = {}
 options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-options.secretOrKey = jwtSecretKey.secret;
+options.secretOrKey = jwtSecretKey;
 
 passport.use(new JwtStrategy(options, function(jwt_payload, done) {
 

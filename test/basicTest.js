@@ -21,7 +21,7 @@ describe('test#1 : create user, login and basic functions',  function(){
 
     describe('test route /', function(){
         it("should return an ok code", async function(){
-            await chai.request('http://localhost:3000').get('/')
+            await chai.request('http://localhost:80').get('/')
             .then(res =>{
                 expect(res.status).to.equal(200)
             })
@@ -35,7 +35,7 @@ describe('test#1 : create user, login and basic functions',  function(){
 
     describe('test route  /register', function(){
         it("should register a user and return an 201 code", async function(){
-            await chai.request('http://localhost:3000')
+            await chai.request('http://localhost:80')
             .post('/register')
             .send({
                 
@@ -58,7 +58,7 @@ describe('test#1 : create user, login and basic functions',  function(){
     
     describe('test route  /loginForJWT', function(){
         it("should log in to the system and return a token", async function(){
-            await chai.request('http://localhost:3000')
+            await chai.request('http://localhost:80')
             .get('/loginForJWT')
             .auth('b', 'b')
             .then(res =>{
@@ -76,7 +76,7 @@ describe('test#1 : create user, login and basic functions',  function(){
 
         describe('test route  /testProtected', function(){
             it("should use the token to access the route", async function(){
-                await chai.request('http://localhost:3000')
+                await chai.request('http://localhost:80')
                 .get('/testProtected')
                 .set({ "Authorization": `Bearer ${token}` })
                 .then(res =>{
@@ -96,7 +96,7 @@ describe('test#1 : create user, login and basic functions',  function(){
 
        describe('test route  /items', function(){
         it("should create an item", async function(){
-            await chai.request('http://localhost:3000')
+            await chai.request('http://localhost:80')
             .post('/items/')
             .set({ "Authorization": `Bearer ${token}` })
             .send({
@@ -128,7 +128,7 @@ describe('test#1 : create user, login and basic functions',  function(){
     
     
         it("shows all items", async function(){
-            await chai.request('http://localhost:3000')
+            await chai.request('http://localhost:80')
             .get('/items')
             .then(res =>{
                 console.log(res.body)
@@ -139,7 +139,7 @@ describe('test#1 : create user, login and basic functions',  function(){
             })
         }) 
         it("shows items with an id '1' ", async function(){
-            await chai.request('http://localhost:3000')
+            await chai.request('http://localhost:80')
             .get('/items/1')   
             .then(res =>{
                 console.log(res.body)
@@ -150,7 +150,7 @@ describe('test#1 : create user, login and basic functions',  function(){
             })
         })
         it("shows items in category 'art' ", async function(){
-            await chai.request('http://localhost:3000')
+            await chai.request('http://localhost:80')
             .get('/items/category/art')   
             .then(res =>{
                 console.log(res.body)
@@ -161,7 +161,7 @@ describe('test#1 : create user, login and basic functions',  function(){
             })
         })
         it("shows items in location 'Oulu' ", async function(){
-            await chai.request('http://localhost:3000')
+            await chai.request('http://localhost:80')
             .get('/items/location/oulu')   
             .then(res =>{
                 console.log(res.body)
@@ -172,7 +172,7 @@ describe('test#1 : create user, login and basic functions',  function(){
             })
         })
         it("deletes an item with id '3'  ", async function(){
-            await chai.request('http://localhost:3000')
+            await chai.request('http://localhost:80')
             .delete('/items/3')   
             .set({ "Authorization": `Bearer ${token}` })
             .then(res =>{
@@ -183,7 +183,7 @@ describe('test#1 : create user, login and basic functions',  function(){
             })
         })
         it("shows all items, now without the deleted item", async function(){
-            await chai.request('http://localhost:3000')
+            await chai.request('http://localhost:80')
             .get('/items')
             .then(res =>{
                 console.log(res.body)
