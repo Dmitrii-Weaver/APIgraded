@@ -1,7 +1,6 @@
 
 
 const express = require('express')
-const fs = require('fs');
 const multer = require('multer')
 const bodyParser = require('body-parser')
 const app = express()
@@ -19,7 +18,7 @@ const passportInstance = require('./passport')
 
 var storage = cloudinaryStorage({
     cloudinary: cloudinary,
-    folder = 'images',
+    folder : 'images',
     allowedFormats: ['jpg', 'png'],
 })
 
