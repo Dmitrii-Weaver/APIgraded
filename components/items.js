@@ -5,7 +5,6 @@ const multer = require('multer')
 const bodyParser = require('body-parser')
 const app = express()
 const Ajv = require('ajv').default
-const multerUpload = multer({ dest: '../images' })
 const itemSchema = require("../schemas/items_schema.json")
 
 var cloudinary = require('cloudinary')
