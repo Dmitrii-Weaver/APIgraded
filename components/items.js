@@ -20,7 +20,7 @@ var storage = new cloudinaryStorage({
     params : {
     folder : 'images',
     allowedFormats: ['jpg', 'png'],
-    public_id: (file)}
+    public_id: ("1")}
 })
 
 var parser = multer({ storage: storage })
