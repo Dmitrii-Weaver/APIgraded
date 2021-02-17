@@ -19,7 +19,7 @@ var storage = new cloudinaryStorage({
     cloudinary: cloudinary,
     params : {
     folder : 'images',
-    allowedFormats: ['jpg', 'png'],
+    format: async (req, file),
     public_id: (req, file)}
 })
 
