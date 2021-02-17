@@ -47,11 +47,11 @@ app.post('/register', (req, res) => {
 const jwt = require('jsonwebtoken')
 const JwtStrategy = require('passport-jwt').Strategy,
       ExtractJwt = require('passport-jwt').ExtractJwt;
-const jwtSecretKey = process.env.SECRET
+      const jwtSecretKey = {secret : process.env.SECRET};
 
 let options = {}
 options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-options.secretOrKey = jwtSecretKey;
+options.secretOrKey = jwtSecretKey.secret;
 
 app.get('/testProtected', passportInstance.authenticate('jwt', { session: false }),(req, res) => {
     console.log("jwt");
