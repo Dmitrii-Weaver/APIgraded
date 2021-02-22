@@ -113,6 +113,18 @@ router.get(`/location/:location`, (req, res) => {
 })
 
 
+router.get(`/user/:id`, (req, res) => {
+    const result = items_data.items.filter(i => i.item_seller.id == req.params.id)
+    if (result === undefined) {
+        res.sendStatus(404)
+    }
+    else {
+        res.json(result);
+    }
+})
+
+
+
 
 router.delete('/:id', passportInstance.authenticate('jwt', { session: false }), (req, res) => {
     let neededItem = items_data.items.find(i => i.item_id == req.params.id)
