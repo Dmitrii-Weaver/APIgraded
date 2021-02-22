@@ -69,7 +69,8 @@ app.get('/testProtected', passportInstance.authenticate('jwt', { session: false 
 app.get('/loginForJWT',passportInstance.authenticate('basic', { session: false }),(req, res) => {
     const body = {
       id: req.user.id,
-      email : req.user.email
+      email : req.user.email,
+      uname : req.user.username
     };
 
     const payload = {
