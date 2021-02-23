@@ -179,33 +179,33 @@ router.post("/", passportInstance.authenticate('jwt', { session: false }), (req,
     }
 })
 
-router.use(function (err, req, res, next) {
-    console.log('This is the invalid field ->', err.field)
-    next(err)
-  })
 
-router.post('/uploadImage/:id', parser.single('image'), passportInstance.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/uploadImage/:id', parser.single('image'), passportInstance.authenticate('jwt', { session: false }), function (req, res) {
 
 
     let neededItem = items_data.items.find(i => i.item_id == req.params.id)
     if (neededItem.item_seller.id == req.user.id) {
         let index = items_data.items.indexOf(neededItem)
         items_data.items[index].item_info.images.push(req.file)
+        console.log(req.file);
+        res.json(req.file);
         res.sendStatus(200)
 
 
 
     }
     else if (neededItem == undefined) {
+        console.log(req.file);
+        res.json(req.file);
         res.sendStatus(404)
     }
     else if (neededItem.item_seller.id != req.user.id) {
+        console.log(req.file);
+        res.json(req.file);
         res.sendStatus(401)
     }
 
 
-
-    console.log(req.file);
 
     /*
     fs.rename(req.file.path, './uploads/' + req.file.originalname, function (err) {
