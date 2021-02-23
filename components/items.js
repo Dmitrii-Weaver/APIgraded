@@ -180,6 +180,10 @@ router.post("/", passportInstance.authenticate('jwt', { session: false }), (req,
 })
 
 router.post('/uploadImage/:id', parser.single('image'), passportInstance.authenticate('jwt', { session: false }), (req, res) => {
+    app.use(function (err, req, res, next) {
+        console.log('This is the invalid field ->', err.field)
+        next(err)
+      })
 
     let neededItem = items_data.items.find(i => i.item_id == req.params.id)
     if (neededItem.item_seller.id == req.user.id) {
@@ -196,6 +200,7 @@ router.post('/uploadImage/:id', parser.single('image'), passportInstance.authent
     else if (neededItem.item_seller.id != req.user.id) {
         res.sendStatus(401)
     }
+
 
 
     console.log(req.file);
