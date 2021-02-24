@@ -7,14 +7,21 @@ const app = express()
 const Ajv = require('ajv').default
 const itemSchema = require("../schemas/items_schema.json")
 
-var cloudinary = require('cloudinary').v2
+//var cloudinary = require('cloudinary').v2
+var cloudinary = require('cloudinary');
 var {CloudinaryStorage} = require('multer-storage-cloudinary')
 
 const router = express.Router();
 
 const passportInstance = require('./passport')
 
+var storage = cloudinaryStorage({
+    cloudinary: cloudinary,
+    folder: 'https://cloudinary.com/console/c-e571779be8bc63848d4a852927166d/media_library/folders/485566904153481e19e7ba0fe52c621f', // give cloudinary folder where you want to store images
+    allowedFormats: ['jpg', 'png'],
+  });
 
+/*
 var storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params : {
@@ -22,9 +29,15 @@ var storage = new CloudinaryStorage({
     allowedFormats: ['jpg', 'png'],
     public_id: ("1")}
 })
+*/
 
 var parser = multer({ storage: storage })
 
+router.post('/upload', parser.single('image'), function (req, res) {
+    console.log(req.file);
+    res.status(201);
+    res.json(req.file);
+});
 
 let items_data = {
     items: [
@@ -180,6 +193,8 @@ router.post("/", passportInstance.authenticate('jwt', { session: false }), (req,
 })
 
 
+/*
+
 router.post('/uploadImage/:id', parser.single('image'), passportInstance.authenticate('jwt', { session: false }), function (req, res) {
 
 
@@ -204,6 +219,9 @@ router.post('/uploadImage/:id', parser.single('image'), passportInstance.authent
         res.json(req.file);
         res.sendStatus(401)
     }
+ });
+
+*/
 
 
 
@@ -214,7 +232,8 @@ router.post('/uploadImage/:id', parser.single('image'), passportInstance.authent
         res.send("Test");
       });    */
 
-});
+
+
 
 
 
