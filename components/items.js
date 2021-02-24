@@ -8,7 +8,7 @@ const Ajv = require('ajv').default
 const itemSchema = require("../schemas/items_schema.json")
 
 var cloudinary = require('cloudinary').v2
-var {CloudinaryStorage} = require('multer-storage-cloudinary')
+var { CloudinaryStorage } = require('multer-storage-cloudinary')
 
 const router = express.Router();
 
@@ -17,8 +17,8 @@ const passportInstance = require('./passport')
 
 var storage = new CloudinaryStorage({
     cloudinary: cloudinary,
-    params : {
-    allowedFormats: ['jpg', 'png']}
+    params: {
+    }
 })
 
 var parser = multer({ storage: storage })
