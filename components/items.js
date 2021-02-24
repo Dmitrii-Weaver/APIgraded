@@ -9,7 +9,7 @@ const itemSchema = require("../schemas/items_schema.json")
 
 //var cloudinary = require('cloudinary').v2
 var cloudinary = require('cloudinary');
-var {CloudinaryStorage} = require('multer-storage-cloudinary')
+var cloudinaryStorage = require('multer-storage-cloudinary');
 
 const router = express.Router();
 
