@@ -180,7 +180,7 @@ router.post("/", passportInstance.authenticate('jwt', { session: false }), (req,
 })
 
 
-router.post('/uploadImage/:id', parser.single('image'), passportInstance.authenticate('jwt', { session: false }), function (req, res) {
+router.post('/uploadImage/:id', parser.single('image/jpeg'), passportInstance.authenticate('jwt', { session: false }), function (req, res) {
 
 
     let neededItem = items_data.items.find(i => i.item_id == req.params.id)
