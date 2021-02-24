@@ -7,19 +7,19 @@ const app = express()
 const Ajv = require('ajv').default
 const itemSchema = require("../schemas/items_schema.json")
 
-var cloudinary = require('cloudinary').v2
-var { CloudinaryStorage } = require('multer-storage-cloudinary')
+var cloudinary = require('cloudinary')
+var { cloudinaryStorage } = require('multer-storage-cloudinary')
 
 const router = express.Router();
 
 const passportInstance = require('./passport')
 
 
-var storage = new CloudinaryStorage({
+var storage = cloudinaryStorage({
     cloudinary: cloudinary,
-    params: {
-    }
-})
+    folder: '', 
+    allowedFormats: ['jpg', 'png'],
+  });
 
 var parser = multer({ storage: storage })
 
@@ -178,7 +178,7 @@ router.post("/", passportInstance.authenticate('jwt', { session: false }), (req,
 })
 
 
-router.post('/uploadImage/:id', parser.single('image/jpeg'), passportInstance.authenticate('jwt', { session: false }), function (req, res) {
+router.post('/uploadImage/:id', parser.single('image'), passportInstance.authenticate('jwt', { session: false }), function (req, res) {
 
 
     let neededItem = items_data.items.find(i => i.item_id == req.params.id)
