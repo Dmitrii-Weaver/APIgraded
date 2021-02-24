@@ -178,6 +178,8 @@ router.post("/", passportInstance.authenticate('jwt', { session: false }), (req,
 })
 
 
+/*
+
 router.post('/uploadImage/:id', parser.single('image'), passportInstance.authenticate('jwt', { session: false }), function (req, res) {
 
 
@@ -203,6 +205,17 @@ router.post('/uploadImage/:id', parser.single('image'), passportInstance.authent
         res.sendStatus(401)
     }
 
+    });
+
+    */
+
+    router.post('/upload', parser.single('image'), function (req, res) {
+        console.log(req.file);
+        res.status(201);
+        res.json(req.file);
+    });
+    
+
 
 
     /*
@@ -212,7 +225,7 @@ router.post('/uploadImage/:id', parser.single('image'), passportInstance.authent
         res.send("Test");
       });    */
 
-});
+
 
 
 
