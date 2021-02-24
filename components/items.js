@@ -18,9 +18,7 @@ const passportInstance = require('./passport')
 var storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params : {
-    folder : 'https://cloudinary.com/console/c-e571779be8bc63848d4a852927166d/media_library/folders/485566904153481e19e7ba0fe52c621f',
-    allowedFormats: ['jpg', 'png'],
-    public_id: ("1")}
+    allowedFormats: ['jpg', 'png']}
 })
 
 var parser = multer({ storage: storage })
