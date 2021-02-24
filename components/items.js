@@ -8,7 +8,7 @@ const Ajv = require('ajv').default
 const itemSchema = require("../schemas/items_schema.json")
 
 var cloudinary = require('cloudinary')
-var { cloudinaryStorage } = require('multer-storage-cloudinary')
+var  cloudinaryStorage  = require('multer-storage-cloudinary')
 
 const router = express.Router();
 
