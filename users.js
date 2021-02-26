@@ -18,7 +18,7 @@ module.exports = {
   getUserWithApiKey: (apiKey) => users.find(u => u.validApiKey == apiKey),
   addUser: (username, email, password) => {
     users.push({
-      id: users.length,
+      id: Math.floor((Math.random() * 9999999) + 1),
       username,
       email,
       password
